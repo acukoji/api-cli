@@ -45,3 +45,13 @@ https://githowto.com/create_a_project
 
 # A nice explanation:
 https://howtogit.archive.pieterdedecker.be/concepts/types-of-changes.html#targetText=Untracked%20changes%20are%20changes%20to,into%20its%20version%20history%20yet.
+
+# Just staged this file at this point.
+
+# Git game
+
+https://github.com/git-game/git-game
+
+# Why learning git is important for learning coding:
+
+https://www.freecodecamp.org/news/follow-these-simple-rules-and-youll-become-a-git-and-github-master-e1045057468f/
