@@ -1,8 +1,8 @@
-
-
-1. Created a txt file in api-cli folder as a test.  Named testing.txt
-2. Changed the name to testing.1.txt because I also have a testing.txt file in bin dir.
-3. In the tree, I saw that this testing.1.txt file was on the same level as 
-api-cli.code-workspace.  So i moved it thinking that api-cli.code-workspace is a folder.
-I see that testing.1.txt file has been deleted, and its contents (1 and 2 above) are now in
-api-cli.code-workspace.  
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
