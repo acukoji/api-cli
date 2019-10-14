@@ -25,4 +25,4 @@ async function random3AdviceAll() {
 }
 
 random3AdviceAll()
-console.log("testing...");
+console.log("running...");
