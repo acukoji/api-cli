@@ -61,3 +61,6 @@ typings/
 .next
 
 .DS_Store
+
+# ignore js files in build
+build/
