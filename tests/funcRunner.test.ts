@@ -1,6 +1,6 @@
 import { funcRunner } from '../src/funcRunner';
 
-it('test reverseString', () => {
+test('test reverseString', () => {
     function reverseString(str: string): string {
         return str.split("").reverse().join("");
     }
@@ -10,7 +10,7 @@ it('test reverseString', () => {
 });
 
 
-it('test parseInt', () => {
+test('test parseInt', () => {
     const result = funcRunner('12', parseInt);
     expect(result).toEqual(12);
 });
