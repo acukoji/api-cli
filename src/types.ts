@@ -38,16 +38,65 @@ if (typeof (foo) == 'boolean') {
 
 // call 
 paramaterlessFunction()
-export function paramaterlessFunction() {
-    return null;
+function paramaterlessFunction() {
+    console.log('run this code');
 }
+// call there
+paramaterlessFunction()
 
 const paramaterlessFunction1 = function () {
-    return null;
+    console.log('run this code');
 }
 
 // which is equivilant to paramaterlessFunction
 // though we must define paramaterlessFunctionConst before calling it
-export const paramaterlessFunctionConst = () => null;
+const paramaterlessFunctionConst = () => {
+    console.log('run this code');
+}
 // call
 paramaterlessFunctionConst()
+
+// create a function; 
+// 2 numbers as params
+// returns the multiplication of both numbers
+
+const twoParamFunction = (a: number, b: number): number => a * b
+
+function twoParamFunction2(a: number, b: number): number {
+    return a * b;
+}
+
+
+interface Transformer {
+    value: string;
+    fn: (s: string) => string;
+}
+
+function stringTransformerInterface(transformer: Transformer) {
+    // complex logic
+    return transformer.fn(transformer.value);
+}
+
+function stringTransformer(value: string, fn: (s: string) => string) {
+    // complex logic
+    return fn(value);     // return transformUppercase('hello_world')
+}
+// function transformUppercase(value: string): string {
+//      return value.toUpperCase();
+// }
+// stringTransformer('hello_world', transformUppercase)
+// // HELLO_WORLD
+// stringTransformer('hello_world', (s) => s.toUpperCase())
+// // HELLO_WORLD
+
+
+
+// int a =10
+// int b =9
+// function(a, b)
+
+var a = 1
+var b = 2
+
+if(a == 10){   
+}
