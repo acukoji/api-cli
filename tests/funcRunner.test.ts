@@ -15,10 +15,18 @@ test('test funcRunner calling parseInt', () => {
 });
 
 test('test funcRuner calling repeat3x', () => {
-    function repeat3x (str: string): string{
+    function repeat3x(str: string): string {
         return str + str + str;
     }
 
     const result = funcRunner('print', repeat3x);
+    expect(result).toEqual('printprintprint');
+});
+
+test('test funcRuner calling anonymousFunc repeat3x', () => {
+    const result = funcRunner(
+        'print',
+        (str: string): string => str + str + str
+    );
     expect(result).toEqual('printprintprint');
 });
