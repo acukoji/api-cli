@@ -1,4 +1,4 @@
-import { funcRunner } from '../src/funcRunner';
+import { funcRunner } from '../../src/tmp/funcRunner';
 
 test('test funcRunner calling reverseString', () => {
     function reverseString(str: string): string {

@@ -1,4 +1,4 @@
-import { fib } from '../src/fib';
+import { fib } from '../../src/tmp/fib';
 
 test('test fib(0) returns 0', () => {
     expect(fib(0)).toEqual(0);
