@@ -11,10 +11,10 @@ function printWordCount(str: string): void {
         if (wordsArray[i] == 'alpha') {
             CountAlpha = CountAlpha + 1;
         }
-        else if (wordsArray[i] == 'beta') {
+        if (wordsArray[i] == 'beta') {
             CountBeta = CountBeta + 1;
         }
-        else {
+        if (wordsArray[i] == 'omega') {
             CountOmega = CountOmega + 1;
         }
     }
