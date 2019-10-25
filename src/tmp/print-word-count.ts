@@ -18,9 +18,9 @@ function printWordCount(str: string): void {
             CountOmega = CountOmega + 1;
         }
     }
-    console.log('Alpha: ' + CountAlpha);
-    console.log('Beta: ' + CountBeta);
-    console.log('Omega: ' + CountOmega);
+    console.log('alpha: ' + CountAlpha);
+    console.log('beta: ' + CountBeta);
+    console.log('omega: ' + CountOmega);
 }
 printWordCount('alpha alpha beta beta omega beta')
 
