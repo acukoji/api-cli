@@ -1,32 +1,52 @@
+
+var counter = {};
+var str = ('alpha alpha beta beta omega beta');
+var wordsArray = str.split(' ');
+
+wordsArray.forEach(
+    function (x) {
+        if (counter[x] == undefined) {
+            counter[x] = 1;
+        } else {
+            counter[x] = counter[x] + 1;
+        }
+    }
+)
+console.log(counter);
+
+
+//Older "long" version of the code:
+/* 
 function printWordCount(str: string): void {
 
     var wordsArray = str.split(' ');
     var sortedArray = wordsArray.sort();
     // sort function makes it possible for for-loop to count repeated words, because all repeats are grouped together, and we structure the for-loop to include an if-statement that notices when current iteration (wordsArray[i]) is different than what came before (wordSeen).
-    var wordSeen = null; 
-    var wordCount = 0; 
+    var wordSeen = null;
+    var wordCount = 0;
     // initializing wordSeen/count to null/zero keeps the first iteration from being counted and printed out.  The requirements of the if-statements below allow for the first instance to 'pass through'.  
     for (var i = 0; i < wordsArray.length; i++) {
         if (wordsArray[i] != wordSeen) {
             //sets condition to print out wordSeen with its count, only once the for-loop iterates to a word that's new.
-            if (wordCount > 0){  //important bc wordSeen only becomes defined after the first pass; it starts out null, but is assigned array[i] below--when wordCount also become greater than 0.  Alternatively, if(wordSeen != null) would also work here.
+            if (wordCount > 0) {  //important bc wordSeen only becomes defined after the first pass; it starts out null, but is assigned array[i] below--when wordCount also become greater than 0.  Alternatively, if(wordSeen != null) would also work here.
                 console.log(wordSeen + ": " + wordCount);
             }
             wordSeen = wordsArray[i];
-            wordCount = 1; 
+            wordCount = 1;
         }
-        else{   //wordCount increases each time wordsArray != wordSeen
-            wordCount ++;
+        else {   //wordCount increases each time wordsArray != wordSeen
+            wordCount++;
         }
     }
-//not sure why next line was in the example i modeled from. Seems unnecessary?  It works even in current commented out form.
- //   if (wordCount > 0){ 
-        console.log(wordSeen + ": " + wordCount);
- //   }
-
+    //not sure why next line was in the example i modeled from. Seems unnecessary?  It works even in current commented out form.
+    //   if (wordCount > 0){ 
+    console.log(wordSeen + ": " + wordCount);
+    //   }
 }
-//printWordCount('alpha alpha beta beta omega beta')
+printWordCount('alpha alpha beta beta omega beta')
 printWordCount('1 22 22 1 3')
+
+*/
 
 /*
 resources used:
@@ -51,5 +71,6 @@ V2 How I wrote the code:
 --I kept the initial code of .split, and added .sort.
 --I really wanted to figure it out on my own, but in googling for answers on how to figure out how to keep track of new words from an array, it was pretty much unavoidable to find the solution .
 --I attempted to understand what was going on in the "long way" code, and recreate it here instead of just copypasta from above link.
---I added comments so that I could understand what was happening at each step, and also played with altering parts of the code to see if it would break, and to understand better what each line was doing. 
+--I added comments so that I could understand what was happening at each step, and also played with altering parts of the code to see if it would break, and to understand better what each line was doing.
 */
+
