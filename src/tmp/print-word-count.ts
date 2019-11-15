@@ -1,7 +1,42 @@
+type Counter = {
+    [key: string]: number;
+}
 
-var counter = {};
-var str = ('alpha alpha beta beta omega beta');
+//var counter = new Map<string, number>();
+var counter: Counter = {};
+var str = 'alpha alpha beta beta omega beta';
 var wordsArray = str.split(' ');
+
+// wordsArray.forEach(
+//     function (x) {
+//         // option1
+//         const currValue = counter.get(x);
+//         if (currValue == undefined) {
+//             counter.set(x, 1);
+//         } else {
+//             counter.set(x, currValue + 1);
+//         }
+
+//         // option2
+//         if (counter.get(x) == undefined) {
+//             counter.set(x, 1);
+//         } else {
+//             // broken
+//             // counter.set(x, counter.get(x) + 1);
+//         }
+
+//         // option3
+//         if (counter.get(x) == undefined) {
+//             counter.set(x, 1);
+//         } else {
+//             var value = counter.get(x);
+//             if (value != undefined) {
+//                 counter.set(x, value + 1);
+//             }
+//         }
+//     }
+// )
+// console.log(counter);
 
 wordsArray.forEach(
     function (x) {
@@ -16,7 +51,7 @@ console.log(counter);
 
 
 //Older "long" version of the code:
-/* 
+/*
 function printWordCount(str: string): void {
 
     var wordsArray = str.split(' ');
@@ -24,7 +59,7 @@ function printWordCount(str: string): void {
     // sort function makes it possible for for-loop to count repeated words, because all repeats are grouped together, and we structure the for-loop to include an if-statement that notices when current iteration (wordsArray[i]) is different than what came before (wordSeen).
     var wordSeen = null;
     var wordCount = 0;
-    // initializing wordSeen/count to null/zero keeps the first iteration from being counted and printed out.  The requirements of the if-statements below allow for the first instance to 'pass through'.  
+    // initializing wordSeen/count to null/zero keeps the first iteration from being counted and printed out.  The requirements of the if-statements below allow for the first instance to 'pass through'.
     for (var i = 0; i < wordsArray.length; i++) {
         if (wordsArray[i] != wordSeen) {
             //sets condition to print out wordSeen with its count, only once the for-loop iterates to a word that's new.
@@ -39,7 +74,7 @@ function printWordCount(str: string): void {
         }
     }
     //not sure why next line was in the example i modeled from. Seems unnecessary?  It works even in current commented out form.
-    //   if (wordCount > 0){ 
+    //   if (wordCount > 0){
     console.log(wordSeen + ": " + wordCount);
     //   }
 }
