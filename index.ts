@@ -1,21 +1,17 @@
 import program from 'commander';
+import { advice } from './src/command/advice';
 
-// node build/index.js advice
-// node build/index.js advice --ids=1,2,3
-// node build/index.js advice --query="other"
+// ts-node ./index.ts advice
+// ts-node ./index.ts advice --ids=1,2,3
+// ts-node ./index.ts advice --query="other"
 
 program
   .command('advice')
-  .option('-q, --query <query>', 'Search term')
   .option('-i, --ids <ids>', 'Print by ID')
+  .option('-q, --query <query>', 'Search term')
   .action(function (params: any) {
-    if (params.ids != undefined) {
-      console.log(params.ids);
-    }
-    if (params.query != undefined) {
-      console.log(params.query);
-    }
-  })
+     advice(params.ids, params.query);
+  });
 
 program
   .command('cat-facts')
@@ -24,4 +20,4 @@ program
     console.log(params.alpha)
   })
 
-program.parse(process.argv)
+program.parse(process.argv);
