@@ -1,11 +1,20 @@
+import { randomAdvice } from '../api/advice';
+
 export function advice(idsStr: string, query: string): void {
-    const ids = validateIds(idsStr);
+    if (!idsStr && !query) {
+        // random    
+        randomAdvice()
+            .then((r) => console.log(r.slip.advice));
+    }
 
-    console.log(ids);
-    console.log(query);
+    // ids
+    // query word
+
+    // const ids = convertStrIds(idsStr)
+    // console.log(ids);
+    // console.log(query);
 }
 
-function validateIds(value: string): number[] {
-  return value.split(',').map(value => parseInt(value));
+function convertStrIds(value: string): number[] {
+    return value.split(',').map(value => parseInt(value));
 }
-  

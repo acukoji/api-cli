@@ -24,23 +24,26 @@ console.log('after calling readFile');
 // TODO (acukoji) update var to const, if possible
 // TODO (acukoji) add types to all variables, if possible
 
-// TODO (acukoji) update this solution to use commander to parse/validate CLI paramaters
-//                see commander github page
-
-// TODO (acukoji) move file-grep.ts and print-webpage-links to api-cli/src/tmp project directory
+/* TODO (acukoji) update this solution to use commander to parse/validate CLI 
+paramaters: use input tags to accept file name and wordsearch parameters. 
+see commander github page.  ** to help account for user input error such as 
+missing searchterm or data file.
+*/
 
 var fileName: string = process.argv[3];
 var searchWord = process.argv[2]
 
 fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
-    if(err) console.error(err);
-    
+    if (err) console.error(err);
+
     var contentsArray: string[] = contents.split("\n");
-   
-    // TODO (acukoji) attempt to see if there is a more consise way of writing this
-    var newContentsArray: string[] = contentsArray.filter(function (element: any) {
-        return element.includes(searchWord);
-    });
+
+    // TODO (acukoji) attempt to see if there is a more consise way of writing 
+    // this newContentsArray
+    var newContentsArray: string[] =
+        contentsArray.filter(function (element: any) {
+            return element.includes(searchWord);
+        });
 
     // TODO (acukoji) print "search word not found" if search word had not hits
 
