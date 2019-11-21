@@ -1,28 +1,20 @@
 //var fs = require('fs');
 import fs from 'fs';
+//const program = require('commander');
+import program from 'commander';
 
-//example 1: asynchornous (non-blocking)
-/*
-var fs = require('fs');
- 
-fs.readFile('DATA', 'utf8', function(err, contents) {
-    console.log(contents);
-});
- 
-console.log('after calling readFile');
-*/
+// TODO (acukoji) If a field is not filled in, come up a way to deal with it.
+program
+    .option('-f, --fileName <value>', 'data text to search in')
+    .option('-s, --searchWord <value>', 'search term for grep');
 
-// 'DATA' is the name of the file.
-// 'function' is where we code:
-//1:  to read the file's contents and search for our "search string" parameter.  Where should this parameter be located?
-//should this DATA be from any file, or should it be acquired using "get" method? 
-//2: print out each line that contains our "search string".
-//parse contents into an array of single lines.
-//for array, if line contains "str", print line.
+program.parse(process.argv);
 
+console.log(`fileName: ${program.fileName}`);
+console.log(`searchWord: ${program.searchWord}`);
 
-// TODO (acukoji) update var to const, if possible
-// TODO (acukoji) add types to all variables, if possible
+// TODO (acukoji) update var to const, if possible           *done
+// TODO (acukoji) add types to all variables, if possible    *done
 
 /* TODO (acukoji) update this solution to use commander to parse/validate CLI 
 paramaters: use input tags to accept file name and wordsearch parameters. 
@@ -30,22 +22,41 @@ see commander github page.  ** to help account for user input error such as
 missing searchterm or data file.
 */
 
-var fileName: string = process.argv[3];
-var searchWord = process.argv[2]
+const fileName: string = program.fileName;
+const searchWord: string = program.searchWord;
 
 fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
     if (err) console.error(err);
 
-    var contentsArray: string[] = contents.split("\n");
+    const contentsArray: string[] = contents.split("\n");
 
     // TODO (acukoji) attempt to see if there is a more consise way of writing 
-    // this newContentsArray
-    var newContentsArray: string[] =
-        contentsArray.filter(function (element: any) {
+    // this newContentsArray "arrow functions"
+
+    const newContentsArray: string[] =
+        contentsArray.filter(function (element: string) {
+         //   if(element.includes(searchWord)==false){
+         //       console.log("search word not found");
+         //   }else{
             return element.includes(searchWord);
+         //   }
         });
 
-    // TODO (acukoji) print "search word not found" if search word had not hits
+    
+/*    const newContentsArray: string[] =
+        contentsArray.filter (element: string) =>
+            return element.includes(searchWord);
+        );
+*/
+
+
+    // TODO (acukoji) print "search word not found" if search word had no hits
+    // below code will print not-found message after each line checked in array
+
+    /*
+    if(element.includes(searchWord)==false){
+    console.log("search word not found");
+*/
 
     // for(var i : number = 0; i < newContentsArray.length; i++){
     //     console.log(newContentsArray[i]);
@@ -53,6 +64,7 @@ fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
     //console.log(newContentsArray);
     newContentsArray
         .forEach(x => console.log(x));
+
 })
 
 /*
