@@ -5,10 +5,22 @@ import program from 'commander';
 
 // TODO (acukoji) If a field is not filled in, come up a way to deal with it.
 program
-    .option('-f, --fileName <value>', 'data text to search in')
-    .option('-s, --searchWord <value>', 'search term for grep');
+    .requiredOption('-f, --fileName <value>', 'data text to search in')
+    .requiredOption('-s, --searchWord <value>', 'search term for grep');
 
 program.parse(process.argv);
+
+
+/*
+if(program.searchWord==undefined){
+    console.log("Please enter search word.")
+    process.exit(-1);
+}
+if(program.fileName==undefined){
+    console.log("Please enter file name.")
+    process.exit(-2);
+}
+*/
 
 console.log(`fileName: ${program.fileName}`);
 console.log(`searchWord: ${program.searchWord}`);
@@ -34,20 +46,18 @@ fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
     // this newContentsArray "arrow functions"
 
     const newContentsArray: string[] =
-        contentsArray.filter(function (element: string) {
-         //   if(element.includes(searchWord)==false){
-         //       console.log("search word not found");
-         //   }else{
-            return element.includes(searchWord);
-         //   }
-        });
-
-    
-/*    const newContentsArray: string[] =
-        contentsArray.filter (element: string) =>
-            return element.includes(searchWord);
+        contentsArray.filter((element: string) =>
+            element.includes(searchWord)
         );
-*/
+
+    if (newContentsArray.length == 0){
+        console.log("Search word not found.")
+    }
+    /*    const newContentsArray: string[] =
+            contentsArray.filter (element: string) =>
+                return element.includes(searchWord);
+            );
+    */
 
 
     // TODO (acukoji) print "search word not found" if search word had no hits
@@ -63,7 +73,7 @@ fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
     // }
     //console.log(newContentsArray);
     newContentsArray
-        .forEach(x => console.log(x));
+        .forEach((x: string) => console.log(x));
 
 })
 
