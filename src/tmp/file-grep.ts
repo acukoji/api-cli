@@ -38,9 +38,25 @@ const fileName: string = program.fileName;
 const searchWord: string = program.searchWord;
 
 fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
-    if (err) console.error(err);
+    //if (err) console.error(err);
 
+    if (contents == undefined) {
+        console.error(err)
+        return;
+    }
+    if (contents.length == 0) {
+        console.log("Data file is empty.")
+        return;
+    }
     const contentsArray: string[] = contents.split("\n");
+
+
+    //if not found, log "data file not found in given directory"
+    //must log message instead of throwing error to line 43
+
+    //if (contentsArray == undefined) {
+    //    console.log("")
+    //}
 
     // TODO (acukoji) attempt to see if there is a more consise way of writing 
     // this newContentsArray "arrow functions"
@@ -50,7 +66,7 @@ fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
             element.includes(searchWord)
         );
 
-    if (newContentsArray.length == 0){
+    if (newContentsArray.length == 0) {
         console.log("Search word not found.")
     }
     /*    const newContentsArray: string[] =
@@ -74,7 +90,6 @@ fs.readFile(fileName, 'utf8', function (err: any, contents: string) {
     //console.log(newContentsArray);
     newContentsArray
         .forEach((x: string) => console.log(x));
-
 })
 
 /*
