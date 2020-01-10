@@ -1,9 +1,14 @@
-import { randomAdvice } from '../api/advice';
+import { idAdvice, randomAdvice } from '../api/advice';
 
 export function advice(idsStr: string, query: string): void {
     if (!idsStr && !query) {
         // random    
         randomAdvice()
+            .then((response) => console.log(response.slip.advice));
+    }
+    if (idsStr){
+        // get advice by id#
+        idAdvice()
             .then((response) => console.log(response.slip.advice));
     }
 

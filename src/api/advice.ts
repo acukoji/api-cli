@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 
+// https://api.adviceslip.com/advice/12
+
 const ADVICE_API_RANDOM_URL = "https://api.adviceslip.com/advice";
+const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/12";
 
 type SlipResponse = {
     slip: {
@@ -24,6 +27,16 @@ export async function randomAdvice(): Promise<SlipResponse> {
         const response: AxiosResponse<SlipResponse> =
             await axios.get<SlipResponse>(ADVICE_API_RANDOM_URL);
 
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject(error);
+    }
+}
+export async function idAdvice(): Promise<SlipResponse> {
+    try {
+        const response: AxiosResponse<SlipResponse> =
+        await axios.get<SlipResponse>(ADVICE_API_ID_URL);
         return response.data;
     } catch (error) {
         console.error(error);
