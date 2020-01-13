@@ -1,9 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
-// https://api.adviceslip.com/advice/12
-
 const ADVICE_API_RANDOM_URL = "https://api.adviceslip.com/advice";
-const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/12";
+
 
 type SlipResponse = {
     slip: {
@@ -33,13 +31,43 @@ export async function randomAdvice(): Promise<SlipResponse> {
         return Promise.reject(error);
     }
 }
-export async function idAdvice(): Promise<SlipResponse> {
+
+// URL: https://api.adviceslip.com/advice/12
+/*
+Reponse: 
+{ 
+    "slip":{ 
+        "advice":"Something something someting.",
+        "slip_id":"12"
+    }
+}
+*/
+export async function idAdvice(idsStr: string): Promise<SlipResponse> {
+    const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/"+idsStr
+    console.log(idsStr);
     try {
         const response: AxiosResponse<SlipResponse> =
-        await axios.get<SlipResponse>(ADVICE_API_ID_URL);
+            await axios.get<SlipResponse>(ADVICE_API_ID_URL);
         return response.data;
     } catch (error) {
         console.error(error);
         return Promise.reject(error);
     }
 }
+
+// function multiply(x: number, y: number){
+//     return x * y;
+// }
+
+// const a = 23;
+// const b = 33;
+// multiply(a, b)
+
+
+// export function buildURL() {
+//     return "http://fake-website.com/app/" + num
+// }
+
+// // someOtherJsFile.ts
+// const num = 44;
+// buildURL(num)

@@ -1,6 +1,8 @@
 import { idAdvice, randomAdvice } from '../api/advice';
 
 export function advice(idsStr: string, query: string): void {
+    console.log(idsStr, query);
+
     if (!idsStr && !query) {
         // random    
         randomAdvice()
@@ -8,7 +10,7 @@ export function advice(idsStr: string, query: string): void {
     }
     if (idsStr){
         // get advice by id#
-        idAdvice()
+        idAdvice(idsStr)
             .then((response) => console.log(response.slip.advice));
     }
 

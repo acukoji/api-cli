@@ -10,7 +10,9 @@ program
   .option('-i, --ids <ids>', 'Print by ID')
   .option('-q, --query <query>', 'Search term')
   .action(function (params: any) {
-     advice(params.ids, params.query);
+    console.log(process.argv);
+    console.log("barzz:", params.ids, params.query);
+    advice(params.ids, params.query);
   });
 
 program
