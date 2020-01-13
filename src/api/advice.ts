@@ -43,8 +43,7 @@ Reponse:
 }
 */
 export async function idAdvice(idsStr: string): Promise<SlipResponse> {
-    const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/"+idsStr
-    console.log(idsStr);
+    const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/" + idsStr;
     try {
         const response: AxiosResponse<SlipResponse> =
             await axios.get<SlipResponse>(ADVICE_API_ID_URL);
