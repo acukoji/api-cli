@@ -20,4 +20,4 @@ program
     console.log(params.alpha)
   })
 
-program.parse(process.argv);
+program.parse(process.argv);  
