@@ -7,14 +7,13 @@ type Slip = {
     slip_id: string;
 }
 
-type SlipResponse = {
+type SlipsResponse = {
     total_results: string
     query: string
-    // if search word is included in more than one advice
-    // response will be in Slip[] array fromat.
     slips: Slip[]
-    // each id request will return a single slip response.
-    // each random request will return a single slip response.
+}
+
+type SlipResponse = {
     slip: Slip
 }
 
@@ -102,11 +101,11 @@ export async function idAdvice(idsStr: string): Promise<SlipResponse> {
     }
 }
 
-export async function queryAdvice(query: string): Promise<SlipResponse> {
+export async function queryAdvice(query: string): Promise<SlipsResponse> {
     const ADVICE_API_QUERY_URL = "https://api.adviceslip.com/advice/search/" + query;
     try {
-        const response: AxiosResponse<SlipResponse> =
-            await axios.get<SlipResponse>(ADVICE_API_QUERY_URL);
+        const response: AxiosResponse<SlipsResponse> =
+            await axios.get<SlipsResponse>(ADVICE_API_QUERY_URL);
             
         return response.data;
     } catch (error) {
