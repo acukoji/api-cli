@@ -2,12 +2,31 @@ import axios, { AxiosResponse } from 'axios';
 
 const ADVICE_API_RANDOM_URL = "https://api.adviceslip.com/advice";
 
+type Slip = {
+    advice: string;
+    slip_id: string;
+}
+
 type SlipResponse = {
+    total_results: string
+    query: string
+    // if search word is included in more than one advice
+    // response will be in Slip[] array fromat.
+    slips: Slip[]
+    // each id request will return a single slip response.
+    // each random request will return a single slip response.
+    slip: Slip
+}
+
+/*
+type querySlipResponse = {
     slip: {
-        advice: string;
-        slip_id: string;
+        total_results: string;
+        query: string;
+        slips: string;
     }
 }
+*/
 
 // https://api.adviceslip.com/advice/search/email
 /**
@@ -75,6 +94,20 @@ export async function idAdvice(idsStr: string): Promise<SlipResponse> {
     try {
         const response: AxiosResponse<SlipResponse> =
             await axios.get<SlipResponse>(ADVICE_API_ID_URL);
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return Promise.reject(error);
+    }
+}
+
+export async function queryAdvice(query: string): Promise<SlipResponse> {
+    const ADVICE_API_QUERY_URL = "https://api.adviceslip.com/advice/search/" + query;
+    try {
+        const response: AxiosResponse<SlipResponse> =
+            await axios.get<SlipResponse>(ADVICE_API_QUERY_URL);
+            
         return response.data;
     } catch (error) {
         console.error(error);

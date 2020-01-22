@@ -1,4 +1,4 @@
-import { idAdvice, randomAdvice } from '../api/advice';
+import { idAdvice, randomAdvice, queryAdvice } from '../api/advice';
 
 export function advice(idsStr: string, query: string): void {
 
@@ -8,9 +8,15 @@ export function advice(idsStr: string, query: string): void {
             .then((response) => console.log(response.slip.advice));
     }
     if (idsStr) {
+        // TODO: Handle when there are more than 1 ids passed in, ex --ids="1,3,13"
         // get advice by id#
         idAdvice(idsStr)
             .then((response) => console.log(response.slip.advice));
+    }
+    if (query) {
+        // get advice by query
+        queryAdvice(query)
+            .then((response) => console.log(response.slips));
     }
     // TODO: If query is defined, invoke api/advice search Advice API function
     // TODO: pass query into api/advice search Advice API funciton
