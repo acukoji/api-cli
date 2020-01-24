@@ -38,16 +38,6 @@ type QueryError = {
     }
 }
 
-/*
-type querySlipResponse = {
-    slip: {
-        total_results: string;
-        query: string;
-        slips: string;
-    }
-}
-*/
-
 // https://api.adviceslip.com/advice/search/email
 /**
 { 
