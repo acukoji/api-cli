@@ -17,8 +17,12 @@ export type SlipsResponse = {
     }
 }
 
-type SlipResponse = {
+export type SlipResponse = {
     slip: Slip
+    message: {
+        type: string
+        text: string
+    }
 }
 /*
 type QueryError = {
@@ -100,12 +104,13 @@ Reponse:
 }
 */
 export async function idAdvice(idsStr: string): Promise<SlipResponse> {
+     // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"
     const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/" + idsStr;
     try {
         const response: AxiosResponse<SlipResponse> = await axios.get<SlipResponse>(ADVICE_API_ID_URL);
         return response.data;
     } catch (error) {
-        console.error('oscar' + error);
+        console.error(error);
         return Promise.reject(error);
     }
 }

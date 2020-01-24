@@ -1,4 +1,4 @@
-import { idAdvice, randomAdvice, queryAdvice, SlipsResponse } from '../api/advice';
+import { idAdvice, randomAdvice, queryAdvice, SlipsResponse, SlipResponse } from '../api/advice';
 
 export function advice(idsStr: string, query: string): void {
 
@@ -8,10 +8,15 @@ export function advice(idsStr: string, query: string): void {
             .then((response) => console.log(response.slip.advice));
     }
     if (idsStr) {
-        // TODO: Handle when there are more than 1 ids passed in, ex --ids="1,3,13"
         // get advice by id#
         idAdvice(idsStr)
-            .then((response) => console.log(response.slip.advice));
+            .then((response: SlipResponse) => {
+                if (response.slip) {
+                    console.log(response.slip.advice);   
+                } else {
+                    console.log('failed searching for ids: ' + idsStr);
+                }
+            });
     }
     if (query) {
         // get advice by query
@@ -21,24 +26,11 @@ export function advice(idsStr: string, query: string): void {
                     console.log(response.message.text);   
                 }
                 if (response.slips) {
+                    // TODO: print out all the search response advice "text" on each line
                     console.log(response.slips)
                 }
             });
-        //log error message "text"
-        // if queryAdvice(error) {
-        //     .then((response) => console.log(error.text));
-        // }
     }
-    // TODO: If query is defined, invoke api/advice search Advice API function
-    // TODO: pass query into api/advice search Advice API funciton
-    // TODO: print out all the search response advice text on each line
-
-    // ids
-    // query word
-
-    // const ids = convertStrIds(idsStr)
-    // console.log(ids);
-    // console.log(query);
 }
 
 function convertStrIds(value: string): number[] {
