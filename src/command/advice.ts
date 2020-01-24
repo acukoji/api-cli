@@ -1,4 +1,4 @@
-import { idAdvice, randomAdvice, queryAdvice } from '../api/advice';
+import { idAdvice, randomAdvice, queryAdvice, SlipsResponse } from '../api/advice';
 
 export function advice(idsStr: string, query: string): void {
 
@@ -16,8 +16,12 @@ export function advice(idsStr: string, query: string): void {
     if (query) {
         // get advice by query
         queryAdvice(query)
-            .then((response) => console.log(response.slips));
-    }
+            .then((response: SlipsResponse) => console.log(response));
+         //log error message "text"
+       // if queryAdvice(error) {
+       //     .then((response) => console.log(error.text));
+       // }
+}
     // TODO: If query is defined, invoke api/advice search Advice API function
     // TODO: pass query into api/advice search Advice API funciton
     // TODO: print out all the search response advice text on each line

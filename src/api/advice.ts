@@ -7,14 +7,35 @@ type Slip = {
     slip_id: string;
 }
 
-type SlipsResponse = {
+export type SlipsResponse = {
     total_results: string
     query: string
     slips: Slip[]
+    message: {
+        type: string
+        text: string
+    }
 }
 
 type SlipResponse = {
     slip: Slip
+}
+/*
+type QueryError = {
+    type: string
+    text: string
+}
+*/
+
+
+// Broken search aaa
+// https://api.adviceslip.com/advice/search/aaa
+/*
+{
+    "message": {
+        "type": "notice", 
+        "text": "No advice slips found matching that search term."
+    }
 }
 
 /*
@@ -91,12 +112,10 @@ Reponse:
 export async function idAdvice(idsStr: string): Promise<SlipResponse> {
     const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/" + idsStr;
     try {
-        const response: AxiosResponse<SlipResponse> =
-            await axios.get<SlipResponse>(ADVICE_API_ID_URL);
-
+        const response: AxiosResponse<SlipResponse> = await axios.get<SlipResponse>(ADVICE_API_ID_URL);
         return response.data;
     } catch (error) {
-        console.error(error);
+        console.error('oscar' + error);
         return Promise.reject(error);
     }
 }
@@ -106,7 +125,7 @@ export async function queryAdvice(query: string): Promise<SlipsResponse> {
     try {
         const response: AxiosResponse<SlipsResponse> =
             await axios.get<SlipsResponse>(ADVICE_API_QUERY_URL);
-            
+
         return response.data;
     } catch (error) {
         console.error(error);
