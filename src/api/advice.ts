@@ -2,11 +2,17 @@ import axios, { AxiosResponse } from 'axios';
 
 const ADVICE_API_RANDOM_URL = "https://api.adviceslip.com/advice";
 
+//This type Slip is not exported.  How does it still work?
+//because it is implied with the calling of randomAdvice()
+//Then why are SlipsResponse and SlipResponse exported?
+
+// for randomAdvice
 type Slip = {
     advice: string;
     slip_id: string;
 }
 
+// for queryAdvice
 export type SlipsResponse = {
     total_results: string
     query: string
@@ -17,6 +23,7 @@ export type SlipsResponse = {
     }
 }
 
+// for idAdvice
 export type SlipResponse = {
     slip: Slip
     message: {
@@ -24,15 +31,9 @@ export type SlipResponse = {
         text: string
     }
 }
-/*
-type QueryError = {
-    type: string
-    text: string
-}
-*/
 
 
-// Broken search aaa
+// Broken query search aaa
 // https://api.adviceslip.com/advice/search/aaa
 /*
 {
@@ -42,6 +43,7 @@ type QueryError = {
     }
 }
 
+//Successful query search with 3 responses
 // https://api.adviceslip.com/advice/search/email
 /**
 { 
@@ -93,6 +95,8 @@ export async function randomAdvice(): Promise<SlipResponse> {
     }
 }
 
+
+// search by id
 // URL: https://api.adviceslip.com/advice/12
 /*
 Reponse: 
@@ -105,9 +109,21 @@ Reponse:
 */
 export async function idAdvice(idsStr: string): Promise<SlipResponse> {
      // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"
+     
+     // assumption: their API cannot handle multiple ids
+     // How do I test this assumption?
+     // Each single id appended to the URL returns a type "slip"response
+     // then, multiple ids in idsStr must be parsed into separate requests?
+     // how to separate each id separated by commas
+     // use function convertStrIds from command
+     // convertStrIds parses comma-separated ids string numbers into number array
+     // where to call convertStrIds()?--probably in command?
+
     const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/" + idsStr;
     try {
-        const response: AxiosResponse<SlipResponse> = await axios.get<SlipResponse>(ADVICE_API_ID_URL);
+        const response: AxiosResponse<SlipResponse> = 
+            await axios.get<SlipResponse>(ADVICE_API_ID_URL);
+     //   console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);

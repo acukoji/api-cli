@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 async function random3Advice() {
     try {
@@ -24,5 +24,36 @@ async function random3AdviceAll() {
     }
 }
 
-random3AdviceAll()
+async function randomNAdviceAll(n: Number) {
+    try {
+        var adviceArray = [];
+        for(var i = 0; i < n; i++){
+            adviceArray.push(axios.get('https://api.adviceslip.com/advice'));    
+        }
+        const responses = await axios.all(adviceArray)
+        const datas = responses.map(r => r.data);
+        console.log(datas);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// To run 
+// $ ts-node src/tmp/random-advice.ts
+async function idsAdviceAll(ids: Number[]) {
+    try {     
+        var adviceArray = [];
+        for(var i = 0; i < n; i++){
+            adviceArray.push(axios.get('https://api.adviceslip.com/advice'));    
+        }
+        const responses = await axios.all(adviceArray)
+        const datas = responses.map(r => r.data);
+        console.log(datas);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+idsAdviceAll([4,55,2]);
 console.log("running...");
