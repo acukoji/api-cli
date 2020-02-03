@@ -6,13 +6,13 @@ const ADVICE_API_RANDOM_URL = "https://api.adviceslip.com/advice";
 //because it is implied with the calling of randomAdvice()
 //Then why are SlipsResponse and SlipResponse exported?
 
-// for randomAdvice
+// This type is a component also used in SlipsResponse and SlipResponse.
 type Slip = {
     advice: string;
-    slip_id: string;
 }
 
-// for queryAdvice
+// used when there is Slip[] or "slips" (possible in queryAdvice and idAdvice)
+// or when no slips found matching query search ("text")
 export type SlipsResponse = {
     total_results: string
     query: string
@@ -23,7 +23,7 @@ export type SlipsResponse = {
     }
 }
 
-// for idAdvice
+// used when there is a single Slip or "slip"
 export type SlipResponse = {
     slip: Slip
     message: {
@@ -70,16 +70,13 @@ Always double check you actually attached the file to the email.
 Do not check work email on your days off.
 Never write in an email to someone, something which you wouldn't say to that person's face.
 */
-// TODO: Create a new type or modify "SlipResponse" to parse the Advice API search response
-// TODO: Create a new api/advice function to build a Advice API search query URL
 
 // URL: https://api.adviceslip.com/advice
 /*
 Reponse: 
 { 
     "slip":{ 
-        "advice":"Enjoy a little nonsense now and then.",
-        "slip_id":"160"
+        "advice":"Enjoy a little nonsense now and then."
     }
 }
 */
@@ -91,7 +88,7 @@ export async function randomAdvice(): Promise<SlipResponse> {
         return response.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject(error);
+        throw error;
     }
 }
 
@@ -102,32 +99,38 @@ export async function randomAdvice(): Promise<SlipResponse> {
 Reponse: 
 { 
     "slip":{ 
-        "advice":"Something something someting.",
-        "slip_id":"12"
+        "advice":"Something something someting."
     }
 }
 */
 export async function idAdvice(idsStr: string): Promise<SlipResponse> {
-     // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"
-     
-     // assumption: their API cannot handle multiple ids
-     // How do I test this assumption?
-     // Each single id appended to the URL returns a type "slip"response
-     // then, multiple ids in idsStr must be parsed into separate requests?
-     // how to separate each id separated by commas
-     // use function convertStrIds from command
-     // convertStrIds parses comma-separated ids string numbers into number array
-     // where to call convertStrIds()?--probably in command?
 
     const ADVICE_API_ID_URL = "https://api.adviceslip.com/advice/" + idsStr;
     try {
-        const response: AxiosResponse<SlipResponse> = 
+        const response: AxiosResponse<SlipResponse> =
             await axios.get<SlipResponse>(ADVICE_API_ID_URL);
-     //   console.log(response.data)
+        //   console.log(response.data)
         return response.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject(error);
+        throw error;
+    }
+}
+
+export async function idsAdviceAll(ids: Number[]): Promise<SlipResponse[]> {
+    // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"
+    try {
+        var adviceArray = [];
+        for (var i = 0; i < ids.length; i++) {
+            adviceArray.push(axios.get<SlipResponse>('https://api.adviceslip.com/advice/' + ids[i]));
+        }
+        const responses = await axios.all(adviceArray)
+        const datas = responses.map(r => r.data);
+       // console.log(datas);
+        return datas;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 }
 
@@ -136,27 +139,9 @@ export async function queryAdvice(query: string): Promise<SlipsResponse> {
     try {
         const response: AxiosResponse<SlipsResponse> =
             await axios.get<SlipsResponse>(ADVICE_API_QUERY_URL);
-
         return response.data;
     } catch (error) {
         console.error(error);
-        return Promise.reject(error);
+        throw error;
     }
 }
-
-// function multiply(x: number, y: number){
-//     return x * y;
-// }
-
-// const a = 23;
-// const b = 33;
-// multiply(a, b)
-
-
-// export function buildURL() {
-//     return "http://fake-website.com/app/" + num
-// }
-
-// // someOtherJsFile.ts
-// const num = 44;
-// buildURL(num)

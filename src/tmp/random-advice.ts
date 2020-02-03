@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { EROFS } from 'constants';
 
 async function random3Advice() {
     try {
@@ -43,8 +44,9 @@ async function randomNAdviceAll(n: Number) {
 async function idsAdviceAll(ids: Number[]) {
     try {     
         var adviceArray = [];
-        for(var i = 0; i < n; i++){
-            adviceArray.push(axios.get('https://api.adviceslip.com/advice'));    
+        for(var i = 0; i < ids.length; i++){
+            adviceArray.push(axios.get('https://api.adviceslip.com/advice/' + ids[i])); 
+            console.log('https://api.adviceslip.com/advice/' + ids[i]);  
         }
         const responses = await axios.all(adviceArray)
         const datas = responses.map(r => r.data);
@@ -53,6 +55,19 @@ async function idsAdviceAll(ids: Number[]) {
         console.error(error);
     }
 }
+
+
+// function axiosAll() {
+//     throw new Error('no internet');
+//     // this code is never executed
+// }
+
+// try {     
+//     axiosAll()
+//     // this code is never executed
+// } catch (error) {
+//     console.log(error);
+// }
 
 
 idsAdviceAll([4,55,2]);
