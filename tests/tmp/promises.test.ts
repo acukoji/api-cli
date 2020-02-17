@@ -46,6 +46,15 @@ test('handle thrown errors in a Promise', () => {
         });
 });
 
+test('handle thrown errors in a Promise.then', () => {
+    const promise = Promise.resolve();
+    return promise
+        .then(value => { throw Error('expected then() error') })
+        .catch(err => {
+            expect(err).toEqual(Error('expected then() error'))
+        });
+});
+
 //why does this one not have a test name?
 //it still passes the test?
 //Ans: this is a function that is being used in tests below
@@ -111,11 +120,10 @@ test('call oddsFail using Promise.all', () => {
 test('call Promise.race and assert the fastest', () => {
     const one = new Promise((resolve, reject) => {
         const timeToWaitMs = 1;
-        setTimeout(() =>resolve(1), timeToWaitMs);
+        setTimeout(() => resolve(1), timeToWaitMs);
     });
     const ten = new Promise(resolve => setTimeout(() => resolve(10), 10));
     const twenty = new Promise(resolve => setTimeout(() => { resolve(20) }, 20));
-
     return Promise.race([
         one,
         ten,
@@ -123,7 +131,29 @@ test('call Promise.race and assert the fastest', () => {
     ]).then(value => expect(value).toEqual(1));
 });
 
-test('chain 3 promises together', () => {});
+test('chain 3 promises together', () => {
+    const zero = Promise.resolve(0);
+    const first = new Promise<number>(function (resolve, reject) {
+        zero.then(zeroValue => resolve(zeroValue + 1));
+    });
+    const second = new Promise<number>((resolve, reject) => {
+        first.then(firstValue => resolve(firstValue + 1));
+    });
 
-test('create oddsFail example using async/await', () => {
+    return second
+        .then(value => expect(value).toEqual(2))
+        .catch(err => fail(err));
+});
+
+test('chain 3 promises together async/await', async () => {
+    const zero = await Promise.resolve(0);
+    const first = await Promise.resolve(zero + 1);
+    const second = await Promise.resolve(first + 1);
+    return expect(second).toEqual(2);
+});
+
+test('write to a file', () => {
+});
+
+test('write + read to a file', () => {
 });
