@@ -182,6 +182,19 @@ test('write + read to a file', () => {
         .catch(err => fail(err));
 });
 
+test('chain 3 promises together async/await', async () => {
+    const zero = await Promise.resolve(0);
+    const first = await Promise.resolve(zero + 1);
+    const second = await Promise.resolve(first + 1);
+    return expect(second).toEqual(2);
+});
+
 test('async/await write + read to a file', async () => {
-    // TODO: koji homework
+    const content = '30';
+    const data = new Uint8Array(Buffer.from(content));
+    const AsyncPromiseWrite = 
+        await fs.promises.writeFile('/tmp/writeAndRead.Async.txt', data);
+    const AsyncPromiseRead = 
+        await fs.promises.readFile('/tmp/writeAndRead.Async.txt', 'utf8');
+    return expect(AsyncPromiseRead).toEqual('30');
 });
