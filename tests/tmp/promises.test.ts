@@ -1,4 +1,4 @@
-import { promises } from "dns";
+import fs from "fs";
 
 test('promise returns 3 value', () => {
     const promise = Promise.resolve(3);
@@ -153,7 +153,35 @@ test('chain 3 promises together async/await', async () => {
 });
 
 test('write to a file', () => {
+    const content = '10';
+    const data = new Uint8Array(Buffer.from(content));
+    // const syncWrite = fs.writeFileSync(..)
+    // const callbackWrite = fs.writeFile(...);
+    const promiseWrite = fs.promises.writeFile('/tmp/message.txt', data);
+
+    return promiseWrite
+        .then(value => {
+            expect(value).toEqual(undefined)
+        })
+        .catch(err => fail(err));
 });
 
+
 test('write + read to a file', () => {
+    const content = '20';
+    const data = new Uint8Array(Buffer.from(content));
+    const promiseWrite = fs.promises.writeFile('/tmp/writeAndRead.txt', data);
+    return promiseWrite
+        .then(value => {
+            expect(value).toEqual(undefined);
+            return fs.promises.readFile('/tmp/writeAndRead.txt', 'utf8');
+        })
+        .then(promiseRead => {
+            expect(promiseRead).toEqual('20');
+        })
+        .catch(err => fail(err));
+});
+
+test('async/await write + read to a file', async () => {
+    // TODO: koji homework
 });
