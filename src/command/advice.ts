@@ -15,7 +15,7 @@ export function advice(idsStr: string, query: string): void {
 
     // get advice by id#
     if (idsStr == "") {
-        console.log("error: no id# was entered.")
+        process.stderr.write("error: no id# was entered.");
     }
     if (idsStr) {
         // convert idsStr into separate numbers if there is more than one
