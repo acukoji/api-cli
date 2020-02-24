@@ -1,5 +1,4 @@
 import { idAdvice, randomAdvice, queryAdvice, idsAdviceAll, SlipsResponse, SlipResponse } from '../api/advice';
-import { Z_ASCII } from 'zlib';
 
 
 
@@ -17,40 +16,39 @@ export function advice(idsStr: string, query: string): void {
     if (idsStr == "") {
         process.stderr.write("error: no id# was entered.");
     }
+
     if (idsStr) {
         // convert idsStr into separate numbers if there is more than one
         const idsArr = convertStrIds(idsStr);
-        // TODO: If idsArr is empty, throw an error message
-        //console.log(idsArr)
+        // console.log(idsArr)
 
-        //console.log(idsStr)
-        idsAdviceAll(idsArr)
-            .then((response: SlipResponse[]) => {
-                response.map((x) => {
-                    if (x.slip) {
-                        console.log(x.slip.advice)
-                    }
-                    if (x.message) {
-                        console.log(x.message.text)
-                    }
-                })
-            })
-    }
-
-    // is call to idAdvice no longer needed because idsAdviceAll 
-    // can handle it?
-    /*
-            idAdvice(idsStr)
-                .then((response: SlipResponse) => {
-                    if (response.slip) {
-                        console.log(response.slip.advice);   
-                    } else {
-                        console.log('failed searching for ids: ' + idsStr);
-                    }
-                    return response;
-                });
+        let firstNaN = null;
+        for (var i = 0; i < idsArr.length; i++) {
+            if (isNaN(idsArr[i])) {
+                // firstNaN = idsArr[i]
+                const idStrArr = idsStr.split(',')
+                firstNaN = idStrArr[i]
+                break
+            }
         }
-    */
+
+        if (firstNaN != null) {
+            process.stderr.write('error: ' + firstNaN + ' is not a number')
+        } else {
+            idsAdviceAll(idsArr)
+                .then((response: SlipResponse[]) => {
+                    response.map((x) => {
+                        if (x.slip) {
+                            console.log(x.slip.advice)
+                        }
+                        if (x.message) {
+                            console.log(x.message.text)
+                        }
+                    })
+                })
+        }
+
+    }
 
 
     if (query) {
@@ -73,3 +71,17 @@ export function advice(idsStr: string, query: string): void {
         return value.split(',').map(x => parseInt(x));
     }
 }
+
+// Removed idAdvice since idsAdviceAll can handle this situation
+/*
+        idAdvice(idsStr)
+            .then((response: SlipResponse) => {
+                if (response.slip) {
+                    console.log(response.slip.advice);
+                } else {
+                    console.log('failed searching for ids: ' + idsStr);
+                }
+                return response;
+            });
+    }
+*/
