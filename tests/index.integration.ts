@@ -11,20 +11,32 @@ describe('advice api', () => {
         expect(response.stderr).toEqual('error: no id# was entered.');
     });
 
-    // TODOD: (acukoji) update your API CLI advice code to print this error.
     it('test ids are not numbers', async () => {
         const response = await execPromise('ts-node ./index.ts advice --ids a,b,c');
         expect(response.stderr).toEqual('error: a is not a number');
     });
 
-    // it('test ids command successfully returns ordered advice', async () => {
-    //     const response = await execPromise('ts-node ./index.ts advice --ids mother');
+    it('test ids command successfully returns advice', async () => {
+        const response = await execPromise('ts-node ./index.ts advice --ids 1,10,100');
 
-    //     const expected: string = [
-    //         'Advice(031): Never let your Mother cut your hair.',
-    //         'Advice(208): Play is the true mother of invention.'
-    //     ].join(NEW_LINE);
+        const expected: string = [
+            'Remember that spiders are more afraid of you, than you are of them.',
+            'Never pay full price for a sofa at DFS.',
+            'Everybody makes mistakes.'
+        ].join(NEW_LINE);
 
-    //     expect(response.stdout).toEqual(expected);
-    // });
+        expect(response.stdout).toEqual(expected);
+    });
+
+    it('test query command successfully returns advice', async () => {
+        const response = await execPromise('ts-node ./index.ts advice --query email');
+
+        const expected: string = [
+            'Always double check you actually attached the file to the email.',
+            'Do not check work email on your days off.',
+            "Never write in an email to someone, something which you wouldn't say to that person's face."
+        ].join(NEW_LINE);
+
+        expect(response.stdout).toEqual(expected);
+    });
 });

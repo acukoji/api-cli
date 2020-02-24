@@ -37,12 +37,14 @@ export function advice(idsStr: string, query: string): void {
         } else {
             idsAdviceAll(idsArr)
                 .then((response: SlipResponse[]) => {
-                    response.map((x) => {
-                        if (x.slip) {
-                            console.log(x.slip.advice)
-                        }
+                    const advices = response.map((x) => {
+                        return x.slip.advice;
+                    })
+                    process.stdout.write(advices.join('\n'));
+
+                    response.forEach((x) => {
                         if (x.message) {
-                            console.log(x.message.text)
+                            process.stderr.write(x.message.text)
                         }
                     })
                 })
@@ -57,12 +59,14 @@ export function advice(idsStr: string, query: string): void {
             .then((response: SlipsResponse) => {
                 // response.message is the error message
                 if (response.message) {
-                    console.log(response.message.text);
+                    process.stderr.write(response.message.text);
                 }
                 // response.slips is the advice slip
                 if (response.slips) {
-                    // TODO: print out all the search response advice "text" on each line
-                    console.log(response.slips)
+                    const advices = response.slips.map((x) => {
+                        return x.advice;
+                    });
+                    process.stdout.write(advices.join('\n'))
                 }
             });
     }
