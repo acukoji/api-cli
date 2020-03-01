@@ -1,5 +1,6 @@
 import program from 'commander';
 import { advice } from './src/command/advice';
+import { news } from './src/command/hackerNews'
 
 // ts-node ./index.ts advice
 // ts-node ./index.ts advice --ids=1,2,3
@@ -20,4 +21,17 @@ program
     console.log(params.alpha)
   })
 
-program.parse(process.argv);  
+//hackerNews
+// ts-node ./index.ts hn --ids 8863,8265435
+// Print title, time, author name
+
+program
+  .command('hn')
+  .option('-i, --ids <ids>', 'Print by ID')
+  .action(function (params: any) {
+    news(params.ids, params.query)
+  });
+
+program.parse(process.argv); 
+
+
