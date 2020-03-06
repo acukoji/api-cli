@@ -1,8 +1,0 @@
-//Start with:
-//- ts-node ./index.ts hn --ids 8863,8265435
-//- Print title, time, author name
-//
-//Future commands:
-//- ts-node ./index.ts hn --users jl,cevaris
-//- ts-node ./index.ts hn --top10
-//- ts-node ./index.ts hn --ids 8863 --include-kids

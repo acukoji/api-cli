@@ -36,22 +36,28 @@ export async function hackerNewsId(idsStr: string): Promise<NewsData> {
     }
 }
 
-/*
-export async function hackerNewsIdsAll(ids: Number[]): Promise<NewsData> {
+
+export async function hackerNewsIdsAll(idsStr: Number[]): Promise<NewsData[]> {
     // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"
+    const HACKERNEWS_API_ID_URL = "https://hacker-news.firebaseio.com/v0/item/";
     try {
-        var adviceArray = [];
-        for (var i = 0; i < ids.length; i++) {
-            adviceArray.push(axios.get<NewsData>("https://api.adviceslip.com/hacker-news.firebaseio.com/v0/item/" + ids[i] + ".json"));
+        var newsArray: Promise<AxiosResponse<NewsData>>[] = [];
+        for (var i = 0; i < idsStr.length; i++) {
+            newsArray.push(axios.get<NewsData>(HACKERNEWS_API_ID_URL + idsStr[i] + ".json?print=pretty"));
         }
-        const responses = await axios.all(adviceArray)
-        const datas = responses.map(r => r.data);
-       // console.log(datas);
+
+        const promises: Promise<AxiosResponse<NewsData>[]>  = axios.all(newsArray);
+        const responses: AxiosResponse<NewsData>[] = await promises;
+        //console.log(responses)
+        // const responses = await axios.all(newsArray);
+
+        const datas: NewsData[] = responses.map(r => r.data);
+        //console.log(datas);
         return datas;
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
-*/
+
 

@@ -1,7 +1,9 @@
 import { exec } from 'child_process';
 import { EOL as NEW_LINE } from 'os';
 import { promisify } from 'util';
-// import { shuffle } from './helper';
+
+// Run tests
+// jest -c jest.config.integration.js --watchAll
 
 const execPromise = promisify(exec);
 
@@ -13,7 +15,7 @@ describe('advice api', () => {
 
     it('test ids are not numbers', async () => {
         const response = await execPromise('ts-node ./index.ts advice --ids a,b,c');
-        expect(response.stderr).toEqual('error: a is not a number');
+        expect(response.stderr).toEqual('error: a is not a number\n');
     });
 
     it('test ids command successfully returns advice', async () => {
@@ -38,5 +40,12 @@ describe('advice api', () => {
         ].join(NEW_LINE);
 
         expect(response.stdout).toEqual(expected);
+    });
+});
+
+describe('hn', () => {
+    it('test ids without any ids', async () => {
+        const response = await execPromise('ts-node ./index.ts hn --ids=');
+        expect(response.stderr).toEqual('error: no id# was entered.');
     });
 });

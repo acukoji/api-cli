@@ -11,7 +11,11 @@ program
   .option('-i, --ids <ids>', 'Print by ID')
   .option('-q, --query <query>', 'Search term')
   .action(function (params: any) {
-    advice(params.ids, params.query);
+    try {
+      advice(params.ids, params.query);
+    } catch (error) {
+      console.error(error.message);
+    }
   });
 
 program
@@ -32,6 +36,6 @@ program
     news(params.ids, params.query)
   });
 
-program.parse(process.argv); 
+program.parse(process.argv);
 
 

@@ -18,26 +18,29 @@ export function advice(idsStr: string, query: string): void {
     }
 
     if (idsStr) {
+        // 'a,3,4' -> [NaN, 3, 4]
+        // 
         // convert idsStr into separate numbers if there is more than one
         const idsArr = convertStrIds(idsStr);
         // console.log(idsArr)
 
-        let firstNaN = null;
-        for (var i = 0; i < idsArr.length; i++) {
-            if (isNaN(idsArr[i])) {
-                // firstNaN = idsArr[i]
-                const idStrArr = idsStr.split(',')
-                firstNaN = idStrArr[i]
-                break
-            }
-        }
+        // let firstNaN = null;
+        // for (var i = 0; i < idsArr.length; i++) {
+        //     if (isNaN(idsArr[i])) {
+        //         // firstNaN = idsArr[i]
+        //         const idStrArr = idsStr.split(',')
+        //         firstNaN = idStrArr[i]
+        //         break
+        //     }
+        // }
 
-        if (firstNaN != null) {
-            process.stderr.write('error: ' + firstNaN + ' is not a number')
-        } else {
+        // if (firstNaN != null) {
+        //     process.stderr.write('error: ' + firstNaN + ' is not a number')
+        // } else {
             idsAdviceAll(idsArr)
                 .then((response: SlipResponse[]) => {
                     const advices = response.map((x) => {
+                        //return x.message + " " + x.slip.advice;
                         return x.slip.advice;
                     })
                     process.stdout.write(advices.join('\n'));
@@ -48,7 +51,7 @@ export function advice(idsStr: string, query: string): void {
                         }
                     })
                 })
-        }
+        // }
 
     }
 
@@ -70,11 +73,20 @@ export function advice(idsStr: string, query: string): void {
                 }
             });
     }
-
-    function convertStrIds(value: string): number[] {
-        return value.split(',').map(x => parseInt(x));
-    }
 }
+
+function convertStrIds(value: string): number[] {
+    return value
+        .split(',')
+        .map((x: string) => {
+            const parsedValue: number = parseInt(x);
+            if (isNaN(parsedValue)) {
+                throw Error('error: ' + x + ' is not a number');
+            }
+            return parsedValue;
+        });
+}
+
 
 // Removed idAdvice since idsAdviceAll can handle this situation
 /*
