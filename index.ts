@@ -1,6 +1,7 @@
 import program from 'commander';
 import { advice } from './src/command/advice';
 import { news } from './src/command/hackerNews'
+import { hackerNewsIdsAll } from './src/api/hackerNews';
 
 // ts-node ./index.ts advice
 // ts-node ./index.ts advice --ids=1,2,3
@@ -32,8 +33,14 @@ program
 program
   .command('hn')
   .option('-i, --ids <ids>', 'Print by ID')
+  //.option('-u, --users <users>', '')
+  //.option('-t, --top10 <top 10>, '')
   .action(function (params: any) {
-    news(params.ids, params.query)
+    try {
+      news(params.ids, params.query);
+    } catch (error) {
+      console.error(error.message);
+    }
   });
 
 program.parse(process.argv);

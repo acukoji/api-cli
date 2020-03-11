@@ -28,72 +28,45 @@ export function news(idsStr: string, query: string): void {
         const idsArr = convertStrIds(idsStr);
         // console.log(idsArr)
 
-        let firstNaN = null;
-        for (var i = 0; i < idsArr.length; i++) {
-            if (isNaN(idsArr[i])) {
-                // firstNaN = idsArr[i]
-                const idStrArr = idsStr.split(',')
-                firstNaN = idStrArr[i]
-                break
-            }
-        }
-
-        if (firstNaN != null) {
-            process.stderr.write('error: ' + firstNaN + ' is not a number')
-        } else {
-            hackerNewsIdsAll(idsArr)
-                .then((response: NewsData[]) => {
-                    const foo = response.map((x) => {
-                        return x.title + " " + x.time + " " + x.by;
-                    })
-                    process.stdout.write(foo.join('\n'));
-
-                    //response.forEach((x) => {
-                    //    if (x.message) {
-                    //        process.stderr.write(x.message.text)
-                    //    }
-                    //})
+        hackerNewsIdsAll(idsArr)
+            .then((response: NewsData[]) => {
+                const foo = response.map((x) => {
+                    return x.title + " " + x.time + " " + x.by;
                 })
-        }
+                process.stdout.write(foo.join('\n'));
+
+                //response.forEach((x) => {
+                //    if (x.message) {
+                //        process.stderr.write(x.message.text)
+                //    }
+                //})
+            })
 
     }
-
-    /*
-    if (idsStr == "") {
-        process.stderr.write("error: no id# was entered.");
-    }
-
-    if (idsStr) {
-        // convert idsStr into separate numbers if there is more than one
-        const idsArr = convertStrIds(idsStr);
-        // console.log(idsArr)
-
-        let firstNaN = null;
-        for (var i = 0; i < idsArr.length; i++) {
-            if (isNaN(idsArr[i])) {
-                // firstNaN = idsArr[i]
-                const idStrArr = idsStr.split(',')
-                firstNaN = idStrArr[i]
-                break
-            }
-        }
-
-        if (firstNaN != null) {
-            process.stderr.write('error: ' + firstNaN + ' is not a number')
-        } else {
-            hackerNewsId(idsArr)
-                .then((response: NewsData) => {
-                    const advices = response.map((x) => {
-                        return x.slip.advice;
-                    })
-                    process.stdout.write(advices.join('\n'));
-                })
-        }
-
-    }
-    */
 }
+
+// new version of convertStrIds
+// accounts for Nan error handling
+// eliminates necessity of Nan handling in function News,
+// simplifying readability
 
 function convertStrIds(value: string): number[] {
-    return value.split(',').map(x => parseInt(x));
+    return value
+        .split(',')
+        .map((x: string) => {
+            const parsedValue: number = parseInt(x);
+            if (isNaN(parsedValue)) {
+                throw Error('Error: ' + x + ' is not a number');
+            }
+            return parsedValue;
+        });
 }
+
+
+// old convertStrIds --replaced by a function that can
+// also throws an error if Nan is detected in the number[]
+// note: Nan is "not a number" but is of number type.
+
+//function convertStrIds(value: string): number[] {
+//    return value.split(',').map(x => parseInt(x));
+//}

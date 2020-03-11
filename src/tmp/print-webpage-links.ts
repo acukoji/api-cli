@@ -7,7 +7,7 @@ const axios = require('axios');
 axios.get('https://google.com/')
   .then(function (linkText: string) {
     // handle success
-        return linkText.match(/<a [^>]+>([^<]+)<\/a>/)[1]
+        // return linkText.match(/<a [^>]+>([^<]+)<\/a>/)[1]
         console.log(linkText);
   })
  /* .catch(function (error: any) {

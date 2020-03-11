@@ -2,10 +2,6 @@
 //- ts-node ./index.ts hn --ids 8863,8265435
 //- Print title, time, author name
 
-// hacker-news.firebaseio.com/v0/item/8863.json?print=pretty
-// There is extra url info after the item #, 
-// const HACKERNEWS_API_URL will have to be split because of this
-// so somewhere, we'll have to add ".json?print=pretty" after item #.
 
 import axios, { AxiosResponse } from 'axios';
 

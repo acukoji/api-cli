@@ -16,6 +16,8 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "integration-test": "./node_modules/.bin/tsc && jest --config jest.config.integration.js"
   }
 }
+  

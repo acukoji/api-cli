@@ -45,6 +45,7 @@ export function advice(idsStr: string, query: string): void {
                     })
                     process.stdout.write(advices.join('\n'));
 
+                    // error message was part of 'good' path.
                     response.forEach((x) => {
                         if (x.message) {
                             process.stderr.write(x.message.text)
