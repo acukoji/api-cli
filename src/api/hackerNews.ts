@@ -25,7 +25,7 @@ export type UserData = {
     submitted: number[]
 }
 
-export type TopTen = number[]
+export type TopNews = number[]
 
 /*
 export async function hackerNewsId(idsStr: string): Promise<NewsData> {
@@ -58,6 +58,19 @@ export async function hackerNewsUser(userStr: string): Promise<UserData> {
     }
 }
 */
+
+export async function hackerNewsTopStories(TopNum: number): Promise<TopNews> {
+    const HACKERNEWS_TOP_TEN_URL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty";
+    //console.log (HACKERNEWS_TOP_TEN_URL)
+    try {
+        const response: AxiosResponse<TopNews> =
+            await axios.get<TopNews>(HACKERNEWS_TOP_TEN_URL);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 export async function hackerNewsUserAll(userStr: string[]): Promise<UserData[]> {
     const HACKERNEWS_API_USER_URL = "https://hacker-news.firebaseio.com/v0/user/";

@@ -1,8 +1,8 @@
-import { NewsData, UserData, hackerNewsIdsAll, hackerNewsUserAll, } from '../api/hackerNews';
+import { NewsData, UserData, hackerNewsIdsAll, hackerNewsUserAll, hackerNewsTopStories, TopNews } from '../api/hackerNews';
 
 
 
-export function news(idsStr: string, userStr: string, query: string): void {
+export function news(idsStr: string, userStr: string, topNum: number): void {
     if (idsStr == "") {
         process.stderr.write("error: no id# was entered.");
     }
@@ -37,6 +37,43 @@ export function news(idsStr: string, userStr: string, query: string): void {
     //            console.log(response.submitted)
     //        });
     //}
+
+    //if (top10 == " " || "10" || NaN) {
+    //    hackerNewsTopTen(top10)
+    //        .then((response: TopTen) => {
+    //            const TopTenIds = response.slice(0, 10)
+    //            console.log(TopTenIds)
+    //            hackerNewsIdsAll(TopTenIds)
+    //                .then((response: NewsData[]) => {
+    //                    const foo = response.map((x) => {
+    //                        return "Title: " + x.title + "; "
+    //                            + "Time: " + x.time + "; "
+    //                            + "By: " + x.by + "\n";
+    //                    })
+    //                    process.stdout.write(foo.join('\n'));
+    //                })
+    //        })
+    //}
+    if (topNum == undefined || null || NaN) {
+        process.stderr.write("error: no number was entered.")
+        console.log("error: no number was entered.")
+    }
+    if (topNum) {
+        hackerNewsTopStories(topNum)
+            .then((response: TopNews) => {
+                const TopStoryIds = response.slice(0, topNum)
+                console.log(TopStoryIds)
+                hackerNewsIdsAll(TopStoryIds)
+                    .then((response: NewsData[]) => {
+                        const foo = response.map((x) => {
+                            return "Title: " + x.title + "; "
+                                + "Time: " + x.time + "; "
+                                + "By: " + x.by + "\n";
+                        })
+                        process.stdout.write(foo.join('\n'));
+                    })
+            })
+    }
 
     if (userStr) {
         const userIdArr = convertUserIds(userStr);

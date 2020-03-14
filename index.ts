@@ -1,7 +1,7 @@
 import program from 'commander';
 import { advice } from './src/command/advice';
 import { news } from './src/command/hackerNews';
-import { hackerNewsIdsAll } from './src/api/hackerNews';
+//import { hackerNewsIdsAll } from './src/api/hackerNews';
 
 // ts-node ./index.ts advice
 // ts-node ./index.ts advice --ids=1,2,3
@@ -34,10 +34,10 @@ program
   .command('hn')
   .option('-i, --ids <ids>', 'Print by ID')
   .option('-u, --users <users>', 'Print user info')
-  //.option('-t, --top10 <top 10>, 'Print top 10')
+  .option('-t, --top <top>', 'Print top x-number of stories')
   .action(function (params: any) {
     try {
-      news(params.ids, params.users, params.query);
+      news(params.ids, params.users, params.top);
     } catch (error) {
       console.error(error.message);
     }
