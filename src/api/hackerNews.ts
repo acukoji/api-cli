@@ -17,6 +17,17 @@ export type NewsData = {
     url: string
 }
 
+export type UserData = {
+    about: string
+    created: number
+    id: string
+    karma: number
+    submitted: number[]
+}
+
+export type TopTen = number[]
+
+/*
 export async function hackerNewsId(idsStr: string): Promise<NewsData> {
 
     const HACKERNEWS_API_ID_URL = "https://hacker-news.firebaseio.com/v0/item/" + idsStr + ".json?print=pretty";
@@ -31,7 +42,43 @@ export async function hackerNewsId(idsStr: string): Promise<NewsData> {
         throw error;
     }
 }
+*/
 
+/*
+export async function hackerNewsUser(userStr: string): Promise<UserData> {
+    const HACKERNEWS_API_USER_URL = "https://hacker-news.firebaseio.com/v0/user/" + userStr + ".json?print=pretty";
+    console.log (HACKERNEWS_API_USER_URL)
+    try {
+        const response: AxiosResponse<UserData> =
+            await axios.get<UserData>(HACKERNEWS_API_USER_URL);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+*/
+
+export async function hackerNewsUserAll(userStr: string[]): Promise<UserData[]> {
+    const HACKERNEWS_API_USER_URL = "https://hacker-news.firebaseio.com/v0/user/";
+    try{
+        // I don't understand the following line of code
+        var userDataArray: Promise<AxiosResponse<UserData>>[] = [];
+        for (var i = 0; i < userStr.length; i++) {
+            userDataArray.push(axios.get<UserData>(HACKERNEWS_API_USER_URL + userStr[i] + ".json?print=pretty"));
+        }
+
+        const promises: Promise<AxiosResponse<UserData>[]> = axios.all(userDataArray);
+        const responses: AxiosResponse<UserData>[] = await promises;
+        //console.log(responses)
+        const datas: UserData[] = responses.map(r => r.data);
+        //console.log(datas);
+        return datas;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 export async function hackerNewsIdsAll(idsStr: Number[]): Promise<NewsData[]> {
     // TODO: Handle when there are more than one id passed in, ex --ids="1,3,13"

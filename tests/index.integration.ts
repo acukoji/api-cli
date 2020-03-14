@@ -63,5 +63,13 @@ describe('hn', () => {
 
         expect(response.stdout).toEqual(expected);
     });
+    it('test user command successfully returns UserData', async () => {
+        const response = await execPromise('node ./build/index.js hn --users jl');
 
+        const expected: string = [
+            'About: This is a test; Created: 1173923446; Id: jl Karma: 4227'
+        ].join(NEW_LINE);
+
+        expect(response.stdout).toEqual(expected);
+    });
 });

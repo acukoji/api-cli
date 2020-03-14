@@ -1,9 +1,8 @@
-import { NewsData, hackerNewsId, hackerNewsIdsAll } from '../api/hackerNews';
+import { NewsData, UserData, hackerNewsIdsAll, hackerNewsUserAll, } from '../api/hackerNews';
 
 
 
-export function news(idsStr: string, query: string): void {
-
+export function news(idsStr: string, userStr: string, query: string): void {
     if (idsStr == "") {
         process.stderr.write("error: no id# was entered.");
     }
@@ -23,7 +22,62 @@ export function news(idsStr: string, query: string): void {
         });
     }
     */
+
+    if (userStr == "") {
+        process.stderr.write("error: no user name was entered.");
+    }
+
+    //if (userStr) {
+    //    hackerNewsUser(userStr)
+    //        .then((response: UserData) => {
+    //            console.log(response.about)
+    //            console.log(response.created)
+    //            console.log(response.id)
+    //            console.log(response.karma)
+    //            console.log(response.submitted)
+    //        });
+    //}
+
+    if (userStr) {
+        const userIdArr = convertUserIds(userStr);
+        // console.log(userIdArr)
+
+        hackerNewsUserAll(userIdArr)
+            .then((response: UserData[]) => {
+                const foo = response.map((x) => {
+                    return "About: " + x.about + "\n" + "Created: " + x.created + "\n" 
+                    + "Id: " + x.id + "\n" + "Karma: " + x.karma + "\n " 
+                    //+ "Submitted: " + x.submitted 
+                    + "\n";
+                })
+                process.stdout.write(foo.join(''));
+            })
+    }
+
     if (idsStr) {
+        // convert idsStr into separate numbers if there is more than one
+        const idsArr = convertStrIds(idsStr);
+        // console.log(idsArr)
+
+        hackerNewsIdsAll(idsArr)
+            .then((response: NewsData[]) => {
+                const foo = response.map((x) => {
+                    return "Title: " + x.title + "; "
+                    + "Time: " + x.time + "; " 
+                    + "By: " + x.by + "\n";
+                })
+                process.stdout.write(foo.join('\n'));
+
+                //response.forEach((x) => {
+                //    if (x.message) {
+                //        process.stderr.write(x.message.text)
+                //    }
+                //})
+            })
+
+    }
+    /*
+    if (userIdsStr) {
         // convert idsStr into separate numbers if there is more than one
         const idsArr = convertStrIds(idsStr);
         // console.log(idsArr)
@@ -43,6 +97,8 @@ export function news(idsStr: string, query: string): void {
             })
 
     }
+    */
+
 }
 
 // new version of convertStrIds
@@ -51,6 +107,7 @@ export function news(idsStr: string, query: string): void {
 // simplifying readability
 
 function convertStrIds(value: string): number[] {
+//    console.log('something')
     return value
         .split(',')
         .map((x: string) => {
@@ -61,6 +118,11 @@ function convertStrIds(value: string): number[] {
             return parsedValue;
         });
 }
+
+function convertUserIds(value: string): string[] {
+    const splitUsers =  value.split(',')
+    return splitUsers;
+} 
 
 
 // old convertStrIds --replaced by a function that can
