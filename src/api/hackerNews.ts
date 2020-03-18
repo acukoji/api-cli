@@ -27,37 +27,6 @@ export type UserData = {
 
 export type TopNews = number[]
 
-/*
-export async function hackerNewsId(idsStr: string): Promise<NewsData> {
-
-    const HACKERNEWS_API_ID_URL = "https://hacker-news.firebaseio.com/v0/item/" + idsStr + ".json?print=pretty";
-    //console.log (HACKERNEWS_API_ID_URL)
-    try {
-        const response: AxiosResponse<NewsData> =
-            await axios.get<NewsData>(HACKERNEWS_API_ID_URL);
-        //   console.log(response.data)
-        return response.data;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-*/
-
-/*
-export async function hackerNewsUser(userStr: string): Promise<UserData> {
-    const HACKERNEWS_API_USER_URL = "https://hacker-news.firebaseio.com/v0/user/" + userStr + ".json?print=pretty";
-    console.log (HACKERNEWS_API_USER_URL)
-    try {
-        const response: AxiosResponse<UserData> =
-            await axios.get<UserData>(HACKERNEWS_API_USER_URL);
-        return response.data;
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
-}
-*/
 
 export async function hackerNewsTopStories(TopNum: number): Promise<TopNews> {
     const HACKERNEWS_TOP_TEN_URL = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty";
@@ -115,5 +84,37 @@ export async function hackerNewsIdsAll(idsStr: Number[]): Promise<NewsData[]> {
         throw error;
     }
 }
+//OLD CODE:
+/*
+export async function hackerNewsId(idsStr: string): Promise<NewsData> {
+
+    const HACKERNEWS_API_ID_URL = "https://hacker-news.firebaseio.com/v0/item/" + idsStr + ".json?print=pretty";
+    //console.log (HACKERNEWS_API_ID_URL)
+    try {
+        const response: AxiosResponse<NewsData> =
+            await axios.get<NewsData>(HACKERNEWS_API_ID_URL);
+        //   console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+*/
+
+/*
+export async function hackerNewsUser(userStr: string): Promise<UserData> {
+    const HACKERNEWS_API_USER_URL = "https://hacker-news.firebaseio.com/v0/user/" + userStr + ".json?print=pretty";
+    console.log (HACKERNEWS_API_USER_URL)
+    try {
+        const response: AxiosResponse<UserData> =
+            await axios.get<UserData>(HACKERNEWS_API_USER_URL);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+*/
 
 

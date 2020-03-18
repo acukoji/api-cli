@@ -34,7 +34,7 @@ program
   .command('hn')
   .option('-i, --ids <ids>', 'Print by ID')
   .option('-u, --users <users>', 'Print user info')
-  .option('-t, --top <top>', 'Print top x-number of stories')
+  .option('-t, --top [top]', 'Print top x-number of stories')
   .action(function (params: any) {
     try {
       news(params.ids, params.users, params.top);
