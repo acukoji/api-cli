@@ -8,7 +8,14 @@ import { promisify } from 'util';
 const execPromise = promisify(exec);
 
 beforeAll(async () => {
-    // await execPromise('./node_modules/.bin/tsc');
+    // following line of code compiles (ts -> js) first
+    // before running the tests below
+    // tsc is global command in terminal, 
+    // but also tsc is installed locally via package json
+    // the below code is calling on the local tsc
+    // before adding this line of code, it was compiling before running
+    // each test, causing it to timeout.
+    await execPromise('./node_modules/.bin/tsc');
 });
 
 describe('advice api', () => {
@@ -47,29 +54,71 @@ describe('advice api', () => {
     });
 });
 
+// TODO: test the edge cases like --top, -top=0, etc.
 describe('hn', () => {
     it('test ids without any ids', async () => {
         const response = await execPromise('node ./build/index.js hn --ids=');
-        expect(response.stderr).toEqual('error: no id# was entered.');
+        expect(response.stderr).toEqual('Error: no id# was entered\n');
     });
 
     it('test ids command successfully returns title/time/by', async () => {
         const response = await execPromise('node ./build/index.js hn --ids 8863,8265435');
 
         const expected: string = [
-            'My YC app: Dropbox - Throw away your USB drive 1175714200 dhouston',
-            'Students Grade Teachers and Panorama Education (YC S13) Harnesses the Data 1409778049 jl'
+            'Title: My YC app: Dropbox - Throw away your USB drive; Time: 1175714200; By: dhouston\n',
+            'Title: Students Grade Teachers and Panorama Education (YC S13) Harnesses the Data; Time: 1409778049; By: jl\n'
         ].join(NEW_LINE);
 
+        console.log(response)
+        console.log(response.stdout)
+        // console.log(expected);
+        
         expect(response.stdout).toEqual(expected);
     });
     it('test user command successfully returns UserData', async () => {
-        const response = await execPromise('node ./build/index.js hn --users jl');
+        const response = await execPromise('node ./build/index.js hn --users jl,cevaris');
 
         const expected: string = [
-            'About: This is a test; Created: 1173923446; Id: jl Karma: 4227'
+            'About: This is a test',
+            'Created: 1173923446',
+            'Id: jl',
+            'Karma: 4227',
+            'About: Software Developer<p>TestOne',
+            'TestTwo',
+            'Created: 1361637682',
+            'Id: cevaris',
+            'Karma: 24' + '\n'
         ].join(NEW_LINE);
 
+        console.log(response)
+        console.log(expected);
+
         expect(response.stdout).toEqual(expected);
+    });
+
+    it('test top command without equals sign returns the top id# and title/time/by', async () => {
+        const response = await execPromise('node ./build/index.js hn --top');
+
+        const expected: string = [
+            '[ 22630665 ]',
+            'Title: Netflix to cut streaming quality in Europe for 30 days; Time: 1584645484; By: tompagenet2' + '\n',
+        ].join(NEW_LINE);
+
+        //console.log(response.stdout)
+        //console.log(expected);
+        
+        expect(response.stdout).toEqual(expected);
+    });
+
+    it('test top=0 command returns Error', async () => {
+        const response = await execPromise('node ./build/index.js hn --top=0');
+
+        const expected: string =
+            'Error: number must be at least 1.' + '\n'
+
+        console.log(response)
+        //console.log(expected);
+        
+        expect(response.stderr).toEqual(expected);
     });
 });

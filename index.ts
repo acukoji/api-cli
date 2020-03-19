@@ -27,7 +27,11 @@ program
   })
 
 //hackerNews
-// ts-node ./index.ts hn --ids 8863,8265435
+// ts-node ./index.ts hn --ids 8863,8265435 (compile and run ts file)
+//--every single test will re-compile the whole file which can lead to a time-out
+//of integration test.  
+// so an alternate way to not time-out is to separate the compiling and running of test
+// tsc && node ./build/index.js hn --ids 8863,8265435 (compile first, then run js file)
 // Print title, time, author name
 
 program

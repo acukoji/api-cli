@@ -84,9 +84,8 @@ export function news(idsStr: string, userStr: string, topNumStr: string): void {
             .then((response: UserData[]) => {
                 const foo = response.map((x) => {
                     return "About: " + x.about + "\n" + "Created: " + x.created + "\n"
-                        + "Id: " + x.id + "\n" + "Karma: " + x.karma + "\n "
+                        + "Id: " + x.id + "\n" + "Karma: " + x.karma + "\n";
                         //+ "Submitted: " + x.submitted 
-                        + "\n";
                 })
                 process.stdout.write(foo.join(''));
             })
@@ -102,7 +101,7 @@ export function news(idsStr: string, userStr: string, topNumStr: string): void {
                 const foo = response.map((x) => {
                     return "Title: " + x.title + "; "
                         + "Time: " + x.time + "; "
-                        + "By: " + x.by + "\n";
+                        + "By: " + x.by + '\n';
                 })
                 process.stdout.write(foo.join('\n'));
 
