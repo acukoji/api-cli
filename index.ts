@@ -1,6 +1,8 @@
 import program from 'commander';
 import { advice } from './src/command/advice';
 import { news } from './src/command/hackerNews';
+import { convertToAscii } from './src/command/imageToAscii';
+
 //import { hackerNewsIdsAll } from './src/api/hackerNews';
 
 // ts-node ./index.ts advice
@@ -26,6 +28,17 @@ program
     console.log(params.alpha)
   })
 
+program
+  .command('imageToAscii')
+  .option('-u, --url <url>', 'url of image')
+  .action(function (params: any) {
+    try {
+      convertToAscii(params.url)
+    } catch (error) {
+      console.error(error.message);
+    }
+    console.log(params.url, params.converted)
+  });
 //hackerNews
 // ts-node ./index.ts hn --ids 8863,8265435 (compile and run ts file)
 //--every single test will re-compile the whole file which can lead to a time-out

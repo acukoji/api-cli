@@ -69,8 +69,8 @@ describe('hn', () => {
             'Title: Students Grade Teachers and Panorama Education (YC S13) Harnesses the Data; Time: 1409778049; By: jl\n'
         ].join(NEW_LINE);
 
-        console.log(response)
-        console.log(response.stdout)
+        //console.log(response)
+        //console.log(response.stdout)
         // console.log(expected);
         
         expect(response.stdout).toEqual(expected);
@@ -90,8 +90,8 @@ describe('hn', () => {
             'Karma: 24' + '\n'
         ].join(NEW_LINE);
 
-        console.log(response)
-        console.log(expected);
+        //console.log(response)
+        //console.log(expected);
 
         expect(response.stdout).toEqual(expected);
     });
@@ -116,7 +116,7 @@ describe('hn', () => {
         const expected: string =
             'Error: number must be at least 1.' + '\n'
 
-        console.log(response)
+        //console.log(response)
         //console.log(expected);
         
         expect(response.stderr).toEqual(expected);

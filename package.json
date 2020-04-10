@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.1",
-    "commander": "^4.1.0"
+    "commander": "^4.1.0",
+    "image-to-ascii": "^3.0.12"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
@@ -20,4 +21,3 @@
     "integration-test": "./node_modules/.bin/tsc && jest --config jest.config.integration.js"
   }
 }
-  
