@@ -20,12 +20,14 @@ export function convertToAscii(url: string): void {
 
     //Missing url argument handling was unnecessary, 
     //as this error handling is built into the API
-    if(url == ""){
+    if(url == "" || url == undefined){
         throw Error('Error: no url was entered');
     }
-     if (url != undefined){
+    
+    if (url != undefined){
         imageToAscii(url, (err: any, converted: any) => {
             if (converted) {
+                console.log(url)
                 console.log(converted);
             }
             if (err){

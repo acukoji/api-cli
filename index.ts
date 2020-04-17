@@ -37,7 +37,7 @@ program
     } catch (error) {
       console.error(error.message);
     }
-    console.log(params.url)
+    //console.log(params.url)
   });
 //hackerNews
 // ts-node ./index.ts hn --ids 8863,8265435 (compile and run ts file)
