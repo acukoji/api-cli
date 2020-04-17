@@ -96,18 +96,22 @@ describe('hn', () => {
         expect(response.stdout).toEqual(expected);
     });
 
-    it('test top command without equals sign returns the top id# and title/time/by', async () => {
+    it('test top command without equals sign returns the top id# and title/time/by and' +
+    'asserting that it contains Title: Time: By:', async () => {
         const response = await execPromise('node ./build/index.js hn --top');
-
-        const expected: string = [
-            '[ 22630665 ]',
-            'Title: Netflix to cut streaming quality in Europe for 30 days; Time: 1584645484; By: tompagenet2' + '\n',
-        ].join(NEW_LINE);
+        expect(response.stdout).toMatch(/Title:/)
+        expect(response.stdout).toMatch(/Time:/)
+        expect(response.stdout).toMatch(/By:/)
+        expect(response.stdout).toMatch(/[ \d+ ]/)
+        //const expected: string = [
+        //    '[ 22630665 ]',
+        //    'Title: Netflix to cut streaming quality in Europe for 30 days; Time: 1584645484; By: tompagenet2' + '\n',
+        //].join(NEW_LINE);
 
         //console.log(response.stdout)
         //console.log(expected);
         
-        expect(response.stdout).toEqual(expected);
+        //expect(response.stdout).toEqual(expected);
     });
 
     it('test top=0 command returns Error', async () => {
