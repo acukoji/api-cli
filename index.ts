@@ -31,9 +31,12 @@ program
 program
   .command('imageToAscii')
   .option('-u, --url <url>', 'url of image')
+  .option('-c, --colored <color>', 'default is true')
+  .option('-r, --reverse <negative>', 'negative of image')
+  .option('-p, --pixwidth <pixwidth>', 'default is 2')
   .action(function (params: any) {
     try {
-      convertToAscii(params.url)
+      convertToAscii(params.url, params.colored, params.reverse, params.pixwidth)
     } catch (error) {
       console.error(error.message);
     }

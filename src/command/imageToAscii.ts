@@ -1,5 +1,5 @@
 
-export function convertToAscii(url: string): void {
+export function convertToAscii(url: string, coloredVal: string, reverseVal: string, pixwidthVal: number): void {
     //logic for parameter url
     //does the url exist?
     //first just make it work for a url that is an endpoint for an image
@@ -20,17 +20,24 @@ export function convertToAscii(url: string): void {
 
     //Missing url argument handling was unnecessary, 
     //as this error handling is built into the API
-    if(url == "" || url == undefined){
+    if (url == "" || url == undefined) {
         throw Error('Error: no url was entered');
     }
-    
-    if (url != undefined){
-        imageToAscii(url, (err: any, converted: any) => {
+
+    if (url != undefined) {
+        const opts = {
+            colored: primitiveToBoolean(coloredVal, true),
+            reverse: primitiveToBoolean(reverseVal, false),
+            pixwidth: pixwidthVal
+        };
+        
+        imageToAscii(url, opts, (err: any, converted: any) => {
             if (converted) {
-                console.log(url)
+                console.log(url);
                 console.log(converted);
+                
             }
-            if (err){
+            if (err) {
                 console.error('Error: failed to convert url to image.')
             }
         })
@@ -39,4 +46,21 @@ export function convertToAscii(url: string): void {
     //    throw Error("This url is not valid");
     //};
 
+}
+
+function primitiveToBoolean(value: string | number | boolean | null, defaultValue: boolean): boolean {
+    if (value == null || value == undefined) {
+        return defaultValue;
+    }
+    const input = value.toString()
+
+    if (input.toLowerCase() === 'true') {
+        return true;
+    }
+    if (input.toLowerCase() === 'false') {
+        return false;
+    }
+    //if (input === string, || input === number) {
+    throw Error("Error: Must choose 'true' or 'false' but got '" + input + "' as an option.")
+    //}
 }
