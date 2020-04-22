@@ -1,3 +1,4 @@
+import { isBoolean } from "util";
 
 export function convertToAscii(url: string, coloredVal: string, reverseVal: string, pixwidthVal: number): void {
     //logic for parameter url
@@ -28,7 +29,7 @@ export function convertToAscii(url: string, coloredVal: string, reverseVal: stri
         const opts = {
             colored: primitiveToBoolean(coloredVal, true),
             reverse: primitiveToBoolean(reverseVal, false),
-            pixwidth: pixwidthVal
+            pixwidth: primitiveToNumber(pixwidthVal, 2)
         };
         
         imageToAscii(url, opts, (err: any, converted: any) => {
@@ -63,4 +64,19 @@ function primitiveToBoolean(value: string | number | boolean | null, defaultValu
     //if (input === string, || input === number) {
     throw Error("Error: Must choose 'true' or 'false' but got '" + input + "' as an option.")
     //}
+}
+
+// TODO: finish primitiveToNumber for pixWidth usage
+function primitiveToNumber(value: string | number | boolean | null, defaultValue: number): number {
+    if (value == null || value == undefined) {
+        return defaultValue;
+    }
+    const input: string = value.toString();
+
+    const convertedNum = parseInt(input);
+
+    if (isNaN(convertedNum)) {
+        throw Error("Error: Must enter a number but got '" + input + "' as a an option.")
+    }
+    return convertedNum;
 }
